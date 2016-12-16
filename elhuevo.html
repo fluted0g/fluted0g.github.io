@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="paredazosApp">
+
+<head>
+	<title>El Huevo - Aldea los Paredazos</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="js/jquery-3.1.1.min.js"></script>
+	<script src="js/angular.min.js"></script>
+
+
+	<script src="js/bootstrap.min.js"></script>	
+	<script src="js/app.js"></script>
+	<script src="js/galleries.js"></script>
+	
+
+	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+	<link rel="stylesheet" href="css/styles.css" type="text/css" />
+
+	<link rel="stylesheet" href="css/photoswipe.css">
+	<link rel="stylesheet" href="css/default-skin.css">  
+
+	<script src="js/photoswipe.min.js"></script> 
+	<script src="js/photoswipe-ui-default.min.js"></script> 
+</head>
+
+
+
+<body>
+	<div class="container-fluid full-page">
+		<header class="row" ng-controller="NavigatorController">
+			<div class="head_image">
+				<img src="images/logo_paredazos.png" alt="Logo Aldea de los Paredazos"/>
+				<h1>HUEVOS ECOLÓGICOS</h1>
+			</div>
+			<div class="head_menu navbar navbar-default" role="navigation">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#boton_colapso" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</div>
+
+					<div class="collapse navbar-collapse" id="boton_colapso">
+						<ul class="nav navbar-nav">
+
+						<li ng-repeat="enlace in enlaces">
+								<a ng-href="{{enlace.url}}">
+									<div>{{enlace.titulo}}</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<main class="row">
+			<div class="main_img">
+				<img src="images/imagen_elhuevo.jpg" alt="Huevos sobre la paja"/>
+			</div>
+			<div class="text_container">
+				<p>Las gallinas que viven en la Aldea, producen huevos sin residuos de antibióticos, hormonas y otras sustancias potencialmente peligrosas para el consumidor. Esto es así porque las gallinas solo se alimentan de forraje, pastos y cereales de agricultura ecológica.</p>
+
+				<p>Sus huevos son blancos, con alguna variedad de rosados.</p>
+
+				<p><i>“ Podemos asegurar que los huevos ecológicos en comparación con los convencionales o intensivos, presentan un mayor contenido en proteínas (2.6%), contienen menos grasa, ya que las gallinas tienen el espacio necesario para moverse y queman más grasa y el perfil lipídico de la grasa del huevo ecológico muestra un 8% más de ácido oleico.</i></p>
+
+				<p><i>En cuanto a la calidad interna de los huevos ecológicos, destaca la determinación de la cámara de aire, importante porque aporta información sobre la frescura del huevo. Es menor en los huevos ecológicos que en los intensivos, siendo indicador de que los huevos ecológicos mantienen su frescura durante más tiempo.”</i></p>
+
+				<p>(Datos obtenidos de los trabajos de investigación que realiza María Dolores Raigón, Doctora en Ingeniería Agrónoma y Presidenta de la Sociedad Española de Agricultura Ecológica, donde compara el valor nutricional entre alimentos ecológicos y convencionales.)</p>
+			</div>
+
+			<div class="official_logos">
+				<img src="images/logos_eco.jpg" alt="Logos de Agricultura Ecológica de la Unión Europea y de Castilla-La Mancha" />
+			</div>
+		</main>
+	</div>
+	<footer class="row">
+		<div class="container-fluid">
+			<div class="row manifest">
+				<div class="col-md-4">
+					Innato en nosotros, pero recogido en la Carta del Consejo para el bienestar del Animal Doméstico, estas son las 5 libertades a las que todos los animales tienen derecho:
+				</div>
+				<div class="col-md-4">
+					1. Libres de malnutrición.
+					2. Libres de incomodidades térmicas y físicas.
+					3. Libres de daño y de enfermedades.
+					4. Libres para expresar los patrones de conductas normales y socialmente aceptables.
+					5. Libres de miedo.
+				</div>
+				<div class="col-md-4">
+					Logotipo "Aldea Los Paredazos": Enrique Borrajeros.
+					Fotografías: Antonio Rodríguez y Natalia Borrajeros.
+					Diseño y contenidos web: Álvaro Borrajeros y Natalia Borrajeros.
+				</div>
+			</div>
+
+			<div class="row contact_buttons">
+
+				<a class="col-md-4" href=""><img class="footer_logo" src="images/logo_contacto.png" alt="logo contacto"/></a>
+				<a class="col-md-4" href=""><img class="footer_logo" src="images/logo_fb.png" alt="logo facebook"/></a>
+				<a class="col-md-4" href=""><img class="footer_logo" src="images/logo_instagram.png" alt="logo instragram"/></a>
+
+			</div>
+
+			<div class="row">
+
+				<h3>Aldea Los Paredazos S.L.U. Ctra. a la Herrera AB-600 PK 0,5 02080 Albacete</h3>
+
+			</div>
+
+		</div>
+	</footer>
+
+	<!-- Root element of PhotoSwipe. Must have class pswp. -->
+	<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+    It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+            <div class="pswp__container">
+            	<div class="pswp__item"></div>
+            	<div class="pswp__item"></div>
+            	<div class="pswp__item"></div>
+            </div>
+
+            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+            <div class="pswp__ui pswp__ui--hidden">
+
+            	<div class="pswp__top-bar">
+
+            		<!--  Controls are self-explanatory. Order can be changed. -->
+
+            		<div class="pswp__counter"></div>
+
+            		<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+            		<button class="pswp__button pswp__button--share" title="Share"></button>
+
+            		<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+            		<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+            		<!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+            		<!-- element will get class pswp__preloader  active when preloader is running -->
+            		<div class="pswp__preloader">
+            			<div class="pswp__preloader__icn">
+            				<div class="pswp__preloader__cut">
+            					<div class="pswp__preloader__donut"></div>
+            				</div>
+            			</div>
+            		</div>
+            	</div>
+
+            	<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+            		<div class="pswp__share-tooltip"></div> 
+            	</div>
+
+            	<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            	</button>
+
+            	<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            	</button>
+
+            	<div class="pswp__caption">
+            		<div class="pswp__caption__center"></div>
+            	</div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+    	$(document).ready(function () {
+
+    		//funcion para el menu sticky
+    		var menu = $('.head_menu');
+    		var origOffsetY = menu.offset().top;
+
+    		function scroll() {
+    			if ($(window).scrollTop() >= origOffsetY) {
+    				$('.head_menu').addClass('sticky');
+    				$('main').addClass('menu-padding');
+    			} else {
+    				$('.head_menu').removeClass('sticky');
+    				$('main').removeClass('menu-padding');
+    			}
+
+
+    		}
+    		document.onscroll = scroll;
+    	});
+
+
+    </script>
+    
+
+    <script type="text/javascript" src="http://arrow.scrolltotop.com/arrow27.js"></script>
+    <noscript>Not seeing a <a href="http://www.scrolltotop.com/">Scroll to Top Button</a>? Go to our FAQ page for more info.</noscript>
+
+</body>
+
+</html>
+
+

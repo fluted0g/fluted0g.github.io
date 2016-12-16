@@ -1,0 +1,118 @@
+body  {
+	overflow-x: hidden;
+
+}
+.full-page {
+	text-align: center;
+	margin: 0 3%;
+	padding: 0 30px;
+	
+}
+
+/*HEAD*/
+header {
+	
+}
+
+.navbar .navbar-nav {
+  display: inline-block;
+  float: none;
+  vertical-align: top;
+}
+
+.head_menu {
+	background-color: #fff;
+	width: 100%;
+	border: none;
+}
+
+.head_menu .container {
+	margin: 0;
+}
+
+.menu-padding {
+	padding-top: 40px;
+}
+
+.navbar-toggle {
+	float: none;
+}
+
+.sticky {
+    position:fixed;
+    top:0;
+    width: 100%;
+    text-align: center;
+}
+
+/*CONTENT*/
+main {
+}
+
+.text_container {
+	margin: 50px 0;
+}
+.main_img img {
+	width: 100%;
+}
+
+main p, main h2, footer .col-md-4 {
+	text-align: left;
+}
+
+figure {
+	display: inline;
+}
+
+.image_gallery {
+
+}
+.gallery_photo {
+	max-width: 24%;
+	height: auto;
+}
+
+
+/*FOOTER*/
+footer {
+	background-color: #ddd;
+	padding: 20px 60px;
+	text-align: center;
+}
+
+.footer_logo {
+	width: 38px;
+}
+
+.manifest {
+	text-align: left;
+	margin-bottom: 35px;
+}
+
+.contact_buttons {
+	display: inline-block;
+  	float: none;
+  	vertical-align: top;
+}
+
+
+/*GLOBAL ELEMENTS*/
+h1,h2,h3 {
+	font-size: 1.2em;
+}
+
+h1 {
+	margin-top: 0;
+}
+
+h2 {
+	font-size: 1em;
+	font-weight: bold;
+}
+
+h3 {
+	margin: 20px 0;
+	padding: 0;
+}
+
+
