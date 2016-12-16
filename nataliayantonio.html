@@ -7,13 +7,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="js/jquery-3.1.1.min.js"></script>
 	<script src="js/angular.min.js"></script>
-
-
-	<script src="js/bootstrap.min.js"></script>	
 	<script src="js/app.js"></script>
+
+
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/sticky_header.js"></script>	
 	<script src="js/galleries.js"></script>
 	
-
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
 	<link rel="stylesheet" href="css/styles.css" type="text/css" />
 
@@ -180,32 +180,7 @@
 
     </div>
 
-    <script>
-    	$(document).ready(function () {
-
-    		//funcion para el menu sticky
-    		var menu = $('.head_menu');
-    		var origOffsetY = menu.offset().top;
-
-    		function scroll() {
-    			if ($(window).scrollTop() >= origOffsetY) {
-    				$('.head_menu').addClass('sticky');
-    				$('main').addClass('menu-padding');
-    			} else {
-    				$('.head_menu').removeClass('sticky');
-    				$('main').removeClass('menu-padding');
-    			}
-
-
-    		}
-    		document.onscroll = scroll;
-    	});
-
-
-    </script>
-    
-
-    <script type="text/javascript" src="http://arrow.scrolltotop.com/arrow27.js"></script>
+<script type="text/javascript" src="http://arrow.scrolltotop.com/arrow27.js"></script>
     <noscript>Not seeing a <a href="http://www.scrolltotop.com/">Scroll to Top Button</a>? Go to our FAQ page for more info.</noscript>
 
 </body>
