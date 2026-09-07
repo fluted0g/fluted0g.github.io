@@ -15,24 +15,12 @@ paredazosApp.controller('NavigatorController', function NavigatorController($sco
       url: 'elhuevo.html'
     },
     {
-      titulo: 'Puntos de Venta',
-      url: 'puntosdeventa.html'
-    },
-    {
       titulo: 'Natalia y Antonio',
       url: 'nataliayantonio.html'
     },
     {
       titulo: 'La aldea',
       url: 'laaldea.html'
-    },
-    {
-      titulo: 'Blog',
-      url: 'blog.html'
-    },
-    {
-      titulo: 'Contacto',
-      url:'contacto.html'
     }
   ];
 });
