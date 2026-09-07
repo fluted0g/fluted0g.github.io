@@ -1,232 +1,682 @@
-<!DOCTYPE html>
-<html ng-app="paredazosApp">
-
+<!doctype html>
+<html lang="es">
 <head>
-	<title>Aldea los Paredazos - Inicio</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cuestionario F-01</title>
+<meta name="description" content="Formulario de entrada: diez preguntas para encuadrar un proyecto.">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap">
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --papel: #F1F4F2;
+    --superficie: #FFFFFF;
+    --tinta: #1B2321;
+    --tinta-2: #5B6764;
+    --tinta-3: #808C89;
+    --linea: #DCE3E0;
+    --linea-fuerte: #C3CECA;
+    --acento: #0F6A58;
+    --acento-tenue: #E3EFEB;
+    --alerta: #B4442F;
+    --sombra: 0 1px 2px rgba(27, 35, 33, .05), 0 6px 16px -10px rgba(27, 35, 33, .18);
 
-	<script src="js/jquery-3.1.1.min.js"></script>
-	<script src="js/angular.min.js"></script>
-	<script src="js/app.js"></script>
+    --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+    --sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
 
-	<script src="js/bootstrap.min.js"></script>	
-	<script src="js/sticky_header.js"></script>
-	<script src="js/galleries.js"></script>
-	
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --papel: #111716;
+      --superficie: #19201E;
+      --tinta: #E7EDEA;
+      --tinta-2: #94A19D;
+      --tinta-3: #74817D;
+      --linea: #29332F;
+      --linea-fuerte: #3A4642;
+      --acento: #58C4A8;
+      --acento-tenue: #16302A;
+      --alerta: #F0907A;
+      --sombra: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 16px -10px rgba(0, 0, 0, .6);
+    }
+  }
 
-	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
-	<link rel="stylesheet" href="css/styles.css" type="text/css" />
+  * { box-sizing: border-box; }
 
-	<link rel="stylesheet" href="css/photoswipe.css">
-	<link rel="stylesheet" href="css/default-skin.css">  
+  html { -webkit-text-size-adjust: 100%; }
 
-	<script src="js/photoswipe.min.js"></script> 
-	<script src="js/photoswipe-ui-default.min.js"></script> 
+  body {
+    margin: 0;
+    background: var(--papel);
+    color: var(--tinta);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  img { max-width: 100%; }
+
+  /* ---------- barra superior ---------- */
+
+  .barra {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: .75rem;
+    padding: .7rem 1.15rem .65rem;
+    background: var(--papel);
+    border-bottom: 1px solid var(--linea);
+  }
+
+  .barra-nombre {
+    font-family: var(--mono);
+    font-size: .74rem;
+    font-weight: 500;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--tinta-2);
+  }
+
+  .barra-estado {
+    display: flex;
+    align-items: baseline;
+    gap: .6rem;
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .04em;
+    color: var(--tinta-3);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .progreso { color: var(--acento); }
+  .guardado[data-modo="error"] { color: var(--alerta); }
+
+  /* ---------- contenedor ---------- */
+
+  main {
+    max-width: 34rem;
+    margin: 0 auto;
+    padding: 1.6rem 1.15rem 4rem;
+  }
+
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--linea);
+  }
+
+  h1 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -.01em;
+    text-wrap: balance;
+  }
+
+  .reglas { margin: 0; font-size: .875rem; color: var(--tinta-2); }
+
+  .aviso {
+    margin-top: .9rem;
+    padding: .7rem .85rem;
+    border-left: 2px solid var(--linea-fuerte);
+    background: var(--superficie);
+    font-size: .82rem;
+    color: var(--tinta-2);
+  }
+
+  /* ---------- preguntas ---------- */
+
+  .preguntas {
+    display: flex;
+    flex-direction: column;
+    gap: 2.6rem;
+    padding-top: 2.2rem;
+  }
+
+  .pregunta { display: flex; flex-direction: column; gap: .7rem; }
+
+  .cabecera { display: flex; gap: .7rem; align-items: baseline; }
+
+  .numero {
+    flex: none;
+    font-family: var(--mono);
+    font-size: .8rem;
+    color: var(--acento);
+    font-variant-numeric: tabular-nums;
+    padding-top: .2rem;
+  }
+
+  .enunciado {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 1.24rem;
+    font-weight: 500;
+    line-height: 1.3;
+    text-wrap: balance;
+  }
+
+  .obligatoria {
+    display: inline-block;
+    margin-left: .5rem;
+    padding: .1rem .4rem;
+    border: 1px solid var(--acento);
+    border-radius: 2px;
+    font-family: var(--mono);
+    font-size: .58rem;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--acento);
+    vertical-align: .18em;
+    white-space: nowrap;
+  }
+
+  .detalle { margin: 0; font-size: .9rem; color: var(--tinta-2); }
+  .porque { margin: 0; font-size: .82rem; color: var(--tinta-3); }
+  .porque b { font-weight: 500; color: var(--tinta-2); }
+
+  .ejemplo {
+    margin: 0;
+    padding-left: .85rem;
+    border-left: 2px solid var(--linea-fuerte);
+    font-size: .84rem;
+    font-style: italic;
+    color: var(--tinta-2);
+  }
+
+  .ejemplo span {
+    display: block;
+    margin-bottom: .2rem;
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: .62rem;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--tinta-3);
+  }
+
+  /* ---------- campos ---------- */
+
+  textarea {
+    width: 100%;
+    min-height: 5.2rem;
+    padding: .8rem .85rem;
+    border: 1px solid var(--linea-fuerte);
+    border-radius: 4px;
+    background: var(--superficie);
+    box-shadow: var(--sombra);
+    color: var(--tinta);
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.5;
+    resize: none;
+    overflow: hidden;
+  }
+
+  textarea::placeholder { color: var(--tinta-3); }
+
+  textarea:focus-visible,
+  .opcion input:focus-visible + span,
+  button:focus-visible {
+    outline: 2px solid var(--acento);
+    outline-offset: 1px;
+  }
+
+  .opciones { display: flex; flex-wrap: wrap; gap: .45rem; }
+
+  .opcion input { position: absolute; opacity: 0; width: 0; height: 0; }
+
+  .opcion span {
+    display: block;
+    padding: .42rem .85rem;
+    border: 1px solid var(--linea-fuerte);
+    border-radius: 999px;
+    background: var(--superficie);
+    font-size: .88rem;
+    color: var(--tinta-2);
+    cursor: pointer;
+    transition: background-color .12s ease, color .12s ease, border-color .12s ease;
+  }
+
+  .opcion input:checked + span {
+    background: var(--acento-tenue);
+    border-color: var(--acento);
+    color: var(--acento);
+    font-weight: 500;
+  }
+
+  /* ---------- acciones ---------- */
+
+  .acciones {
+    margin-top: 3.2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--linea);
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+  }
+
+  .acciones-titulo {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--tinta-3);
+  }
+
+  .botones { display: flex; flex-wrap: wrap; gap: .5rem; }
+
+  button {
+    padding: .6rem 1rem;
+    border: 1px solid var(--acento);
+    border-radius: 4px;
+    background: var(--acento);
+    color: var(--papel);
+    font-family: var(--sans);
+    font-size: .92rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity .12s ease;
+  }
+
+  button:hover { opacity: .88; }
+
+  button.secundario {
+    background: var(--superficie);
+    border-color: var(--linea-fuerte);
+    color: var(--tinta);
+  }
+
+  button.peligro {
+    background: none;
+    border-color: transparent;
+    color: var(--tinta-3);
+    padding-left: 0;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  button.peligro:hover { color: var(--alerta); opacity: 1; }
+
+  .nota { margin: 0; font-size: .8rem; color: var(--tinta-3); }
+
+  .eco {
+    min-height: 1.2em;
+    font-family: var(--mono);
+    font-size: .72rem;
+    color: var(--acento);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .opcion span, button { transition: none; }
+  }
+</style>
 </head>
-
 <body>
 
-	<div class="container-fluid full-page">
-		<header class="row" ng-controller="NavigatorController">
-			<div class="head_image">
-				<img src="images/logo_paredazos.png" alt="Logo Aldea de los Paredazos"/>
-				<h1>HUEVOS ECOLÓGICOS</h1>
-			</div>
-			<div class="head_menu navbar navbar-default" role="navigation">
-				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#boton_colapso" aria-expanded="false">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-					</div>
+<header class="barra">
+  <span class="barra-nombre">F-01</span>
+  <span class="barra-estado">
+    <span class="progreso" id="progreso">0 de 10</span>
+    <span class="guardado" id="guardado">—</span>
+  </span>
+</header>
 
-					<div class="collapse navbar-collapse" id="boton_colapso">
+<main>
+  <div class="intro">
+    <h1>Formulario de entrada</h1>
+    <p class="reglas">Solo la primera pregunta es obligatoria. «No lo sé» es una respuesta válida.</p>
+    <div class="aviso" id="aviso" hidden></div>
+  </div>
 
-						<ul class="nav navbar-nav">
-							<li ng-repeat="enlace in enlaces">
-								<a ng-href="{{enlace.url}}">
-									<div>{{enlace.titulo}}</div>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</header>
+  <div class="preguntas" id="preguntas"></div>
 
-		<main class="row">
-			<div class="main_img">
-				<img src="images/imagen_inicio.jpg" alt="Nuestro cuento, de gallinas."/>
-			</div>
-			<div class="text_container">
-				<h2>Antonio y Natalia, viven en la Aldea Los Paredazos.</h2>
-
-				<p>Siguiendo su sueño de formar una gran familia, escucharon por la radio que una raza de gallina, muy silvestre y muy activa, se encontraba en fase de recuperación por estar en peligro de extinción.</p>
-
-				<p>Con muchos nervios, un 9 de Abril, a sus pollitos de un día, de raza Andaluza perdiz, sin más preámbulos  fueron a recibir.</p>
-
-				<p>Natalia, nunca pensó que ser mamá gallina fuera tan duro. Los primeros 40 días, 14 horas junto a ellos sin pegar ojo la tenían, comprobando la temperatura y que todos bebían y comían. Pero a veces, entre muchos llantos alguno que estaba malito se les iba.</p>
-
-				<p>Una mañana, una pollita con tres meses, del suelo no se movía. ¿Qué le pasa? Natalia a Antonio, con mucha angustia le decía. Observándola se dieron  cuenta,  que una de sus patitas torcida la tenía. Estudiaron y preguntaron qué hacer, pero todo el mundo recomendaba la cazuela si no se notaba mejoría. Por suerte, y como ellos no querían, en un libro antiguo encontraron la solución, y en él se decía:</p>
-
-				<p>“…tomar una  rama de olivo, sacar de ella una tablita del tamaño de su patita y atársela a la gallinita, separándola del resto unos días…”</p>
-
-				<p>Al mes, y quitándole la tablilla, la gallina pastoreaba tan campante con sus demás amigas, y hoy día, pone sus huevos como una más de la cuadrilla.</p>
-
-				<p>Otro día, otra gallina, ya con siete meses, de lo alto de uno de los corrales y sentada sobre seis huevos, empeñada se la veía. Llevándola a una suite, con todas las comodidades VIP, después de 21 días, pío, pío, pío, de debajo de su cuerpo, esos sonidos salían. ¡Qué alegría, cuatro pollitos pude ver al tercer día! Un gallo y tres gallinitas, que con cuatro meses y un día ya tres huevos nos ponían.</p>
-
-				<p>Otra lección aprendida y según la Experiencia que es la madre de la Ciencia,  en la Aldea Los Paredazos, la recría es natural, como la vida misma. Cuando mamá gallina se ponga clueca, a criar como su instinto le guía.</p>
-
-				<p>Ahora, un año después, nuestra parvada de cien gallinas Ecológicas convive así, entre almendros y más feliz que una perdiz. Antonio y Natalia, nunca pensaron que aquel refrán tan antiguo, proviniera de otra familia que en su día, con mucho, mucho mimo, en otra aldea parecida, siguiera su misma filosofía de vida.</p>
-
-				<p>Y colorín, colorado, nuestro cuento, de gallinas…acaba de empezar.</p>
-			</div>
-			<div class="image_gallery" itemscope itemtype="http://schema.org/ImageGallery">
-
-				<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-					<a href="images/inicio/Pollitos-calentitos.jpg" data-size="1024x1024">
-						<img class="gallery_photo" src="images/inicio/Pollitos-calentitos.jpg" itemprop="thumbnail" alt="Pollitos calentitos" />
-					</a>
-				</figure>
-
-				<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-					<a href="images/inicio/Pollitos-bebiendo.jpg" data-size="1024x1024">
-						<img class="gallery_photo" src="images/inicio/Pollitos-bebiendo.jpg" itemprop="thumbnail" alt="Pollitos bebiendo" />
-					</a>
-				</figure>
-
-				<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-					<a href="images/inicio/Pollito-10-dias.jpg" data-size="1024x1024">
-						<img class="gallery_photo" src="images/inicio/Pollito-10-dias.jpg" itemprop="thumbnail" alt="Pollito de diez días" />
-					</a>
-				</figure>
-
-				<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-					<a href="images/inicio/Pollita-2-meses.jpg" data-size="1024x1024">
-						<img class="gallery_photo" src="images/inicio/Pollita-2-meses.jpg" itemprop="thumbnail" alt="Pollita de dos meses" />
-					</a>
-				</figure>
-			</div>
-
-			<div class="official_logos">
-				<img src="images/logos_eco.jpg" alt="Logos de Agricultura Ecológica de la Unión Europea y de Castilla-La Mancha" />
-			</div>
-		</main>
-	</div>
-	<footer class="row">
-		<div class="container-fluid">
-			<div class="row manifest">
-				<div class="col-md-4">
-					Innato en nosotros, pero recogido en la Carta del Consejo para el bienestar del Animal Doméstico, estas son las 5 libertades a las que todos los animales tienen derecho:
-				</div>
-				<div class="col-md-4">
-					1. Libres de malnutrición.
-					2. Libres de incomodidades térmicas y físicas.
-					3. Libres de daño y de enfermedades.
-					4. Libres para expresar los patrones de conductas normales y socialmente aceptables.
-					5. Libres de miedo.
-				</div>
-				<div class="col-md-4">
-					Logotipo "Aldea Los Paredazos": Enrique Borrajeros.
-					Fotografías: Antonio Rodríguez y Natalia Borrajeros.
-					Diseño y contenidos web: Álvaro Borrajeros y Natalia Borrajeros.
-				</div>
-			</div>
-
-			<div class="row contact_buttons">
-
-				<a class="col-md-4" href=""><img class="footer_logo" src="images/logo_contacto.png" alt="logo contacto"/></a>
-				<a class="col-md-4" href=""><img class="footer_logo" src="images/logo_fb.png" alt="logo facebook"/></a>
-				<a class="col-md-4" href=""><img class="footer_logo" src="images/logo_instagram.png" alt="logo instragram"/></a>
-
-			</div>
-
-			<div class="row">
-
-				<h3>Aldea Los Paredazos S.L.U. Ctra. a la Herrera AB-600 PK 0,5 02080 Albacete</h3>
-
-			</div>
-
-		</div>
-	</footer>
-
-	<!-- Root element of PhotoSwipe. Must have class pswp. -->
-	<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <!-- Background of PhotoSwipe. 
-    It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-
-        <!-- Container that holds slides. 
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-            <div class="pswp__container">
-            	<div class="pswp__item"></div>
-            	<div class="pswp__item"></div>
-            	<div class="pswp__item"></div>
-            </div>
-
-            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-            <div class="pswp__ui pswp__ui--hidden">
-
-            	<div class="pswp__top-bar">
-
-            		<!--  Controls are self-explanatory. Order can be changed. -->
-
-            		<div class="pswp__counter"></div>
-
-            		<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-            		<button class="pswp__button pswp__button--share" title="Share"></button>
-
-            		<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-            		<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-            		<!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-            		<!-- element will get class pswp__preloader  active when preloader is running -->
-            		<div class="pswp__preloader">
-            			<div class="pswp__preloader__icn">
-            				<div class="pswp__preloader__cut">
-            					<div class="pswp__preloader__donut"></div>
-            				</div>
-            			</div>
-            		</div>
-            	</div>
-
-            	<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-            		<div class="pswp__share-tooltip"></div> 
-            	</div>
-
-            	<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            	</button>
-
-            	<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            	</button>
-
-            	<div class="pswp__caption">
-            		<div class="pswp__caption__center"></div>
-            	</div>
-
-            </div>
-
-        </div>
-
+  <div class="acciones">
+    <p class="acciones-titulo">Cuando termines</p>
+    <div class="botones">
+      <button type="button" id="copiar">Copiar respuestas</button>
+      <button type="button" class="secundario" id="descargar">Descargar como texto</button>
     </div>
+    <p class="eco" id="eco"></p>
+    <p class="nota">Lo que escribes se guarda en este navegador según lo escribes, y sigue aquí si cierras la página. No se envía a ningún sitio: para hacérnoslo llegar, cópialo o descárgalo y mándanoslo.</p>
+    <div class="botones">
+      <button type="button" class="peligro" id="borrar">Borrar todo lo escrito</button>
+    </div>
+  </div>
+</main>
 
-    <script type="text/javascript" src="js/scrolltoparrow.js"></script>
-    <!--<script type="text/javascript" src="http://arrow.scrolltotop.com/arrow27.js"></script>
-    <noscript>Not seeing a <a href="http://www.scrolltotop.com/">Scroll to Top Button</a>? Go to our FAQ page for more info.</noscript>-->
+<script>
+(function () {
+  'use strict';
+
+  var PREGUNTAS = [
+    {
+      n: 1,
+      obligatoria: true,
+      enunciado: '¿Qué quieres que haga?',
+      detalle: 'Cuéntanoslo en dos o tres frases, con tus palabras. No hace falta que sepas nada de informática.',
+      porque: 'es el punto de partida de todo lo demás.',
+      ejemplo: 'Quiero llevar la cuenta de las bicis que entran a reparar, saber en qué estado está cada una y avisar al cliente cuando esté lista, sin tener que buscar entre papeles.'
+    },
+    {
+      n: 2,
+      enunciado: '¿Para quién es?',
+      detalle: '¿Quién lo va a usar? ¿Cuánta maña se dan con la tecnología?',
+      porque: 'no se diseña igual para una persona sola que para un equipo, ni para alguien que se maneja con soltura que para quien prefiere lo más simple posible.',
+      ejemplo: 'Yo y mi socio. Yo me defiendo, él usa el móvil para poco más que WhatsApp.'
+    },
+    {
+      n: 3,
+      enunciado: '¿Cómo lo haces hoy?',
+      detalle: 'Cuéntanoslo paso a paso, con un caso real concreto, de principio a fin. Y dinos qué parte es la más pesada.',
+      porque: 'es la pregunta más importante del formulario. De lo que ya haces sale casi todo lo que la solución tiene que hacer, mucho mejor que de cualquier descripción abstracta.',
+      ejemplo: 'Entra un cliente con una bici. Apunto su nombre y teléfono en una libreta, le pongo una etiqueta con un número a la bici y anoto qué hay que arreglar. Cuando termino, busco el número en la libreta y llamo. Lo más pesado es cuando alguien llama preguntando por su bici y tengo que ir hoja por hoja.',
+      alto: true
+    },
+    {
+      n: 4,
+      enunciado: '¿Qué información hay por medio y dónde está ahora?',
+      detalle: 'En papel, en un Excel, en tu cabeza, en otro programa que ya usas…',
+      porque: 'para saber qué hay que guardar y si hay algo que haya que traerse de donde está hoy.',
+      ejemplo: 'En una libreta: nombre, teléfono, qué bici es y qué le pasa. Los precios los tengo en la cabeza. Las facturas las hago en un Excel aparte.'
+    },
+    {
+      n: 5,
+      enunciado: '¿Va a haber datos de personas?',
+      detalle: 'Nombres, teléfonos, direcciones, datos de salud, datos de dinero…',
+      porque: 'si hay datos de personas hay que tratarlos con cuidado, y eso cambia cómo se construye la solución.',
+      ejemplo: 'Sí: nombre y teléfono de los clientes.',
+      opciones: ['Sí', 'No', 'No lo sé']
+    },
+    {
+      n: 6,
+      enunciado: '¿Cuánto se va a usar y desde dónde?',
+      detalle: '¿Cuántas veces al día o a la semana? ¿Cuántas personas a la vez? ¿Desde el móvil, desde el ordenador, o desde ambos?',
+      porque: 'no es lo mismo algo que se usa tres veces por semana que algo que se usa cien veces al día, ni algo de ordenador que algo de móvil.',
+      ejemplo: 'Unas diez o quince veces al día, entre los dos. Yo desde el ordenador del taller, mi socio desde el móvil.'
+    },
+    {
+      n: 7,
+      enunciado: '¿Qué NO quieres que haga? ¿Y qué te preocupa que salga mal?',
+      porque: 'saber dónde está el límite evita que la solución crezca sin control. Y lo que te preocupa suele señalar lo más importante.',
+      ejemplo: 'No quiero que sirva para llevar la contabilidad, eso ya lo lleva mi gestor. Me preocupa perder los datos de los clientes, o que se lie tanto que acabe volviendo a la libreta.'
+    },
+    {
+      n: 8,
+      enunciado: '¿Conoces algo parecido que ya exista? ¿Qué te gusta y qué no de ello?',
+      detalle: 'Puede ser un programa, una web, una aplicación del móvil, o algo que hayas visto en otro sitio.',
+      porque: 'comparar con algo conocido explica gustos y expectativas mucho mejor que describirlos en abstracto.',
+      ejemplo: 'Un amigo usa uno de un taller de coches. Me gusta que se ve todo en una pantalla, pero tiene mil botones que no entiendo.'
+    },
+    {
+      n: 9,
+      enunciado: '¿Cómo sabrás dentro de unos meses que ha merecido la pena? ¿Hay alguna fecha que importe?',
+      detalle: 'Y si hay fecha, dinos por qué.',
+      porque: 'para saber qué es un buen resultado, y si hay alguna urgencia real.',
+      ejemplo: 'Si dejo de perder tiempo buscando en la libreta y ningún cliente se queja de que no le he avisado. Fecha no hay, pero antes de la primavera mejor, que es cuando entra más trabajo.'
+    },
+    {
+      n: 10,
+      enunciado: '¿Algo más que quieras contarnos?',
+      detalle: 'Cualquier cosa que creas importante y que no te hayamos preguntado.',
+      porque: 'ningún formulario acierta con todo. Aquí cabe lo que se nos ha escapado.',
+      ejemplo: 'En verano cierro tres semanas y no quiero que se pierda nada mientras tanto.'
+    }
+  ];
+
+  var LOCAL = 'f01-respuestas';
+
+  var elPreguntas = document.getElementById('preguntas');
+  var elProgreso = document.getElementById('progreso');
+  var elGuardado = document.getElementById('guardado');
+  var elAviso = document.getElementById('aviso');
+  var elEco = document.getElementById('eco');
+
+  var campos = {};
+  var estado = {};
+  var puedeGuardar = true;
+
+  /* ---------- pintado ---------- */
+
+  function crear(tag, clase, texto) {
+    var el = document.createElement(tag);
+    if (clase) el.className = clase;
+    if (texto !== undefined) el.textContent = texto;
+    return el;
+  }
+
+  PREGUNTAS.forEach(function (p) {
+    var bloque = crear('section', 'pregunta');
+
+    var cabecera = crear('div', 'cabecera');
+    cabecera.appendChild(crear('span', 'numero', String(p.n).padStart(2, '0')));
+
+    var enunciado = crear('h2', 'enunciado', p.enunciado);
+    if (p.obligatoria) enunciado.appendChild(crear('span', 'obligatoria', 'obligatoria'));
+    cabecera.appendChild(enunciado);
+    bloque.appendChild(cabecera);
+
+    if (p.detalle) bloque.appendChild(crear('p', 'detalle', p.detalle));
+
+    var porque = crear('p', 'porque');
+    porque.appendChild(crear('b', null, 'Por qué te lo preguntamos: '));
+    porque.appendChild(document.createTextNode(p.porque));
+    bloque.appendChild(porque);
+
+    var ejemplo = crear('p', 'ejemplo');
+    ejemplo.appendChild(crear('span', null, 'Ejemplo'));
+    ejemplo.appendChild(document.createTextNode(p.ejemplo));
+    bloque.appendChild(ejemplo);
+
+    if (p.opciones) {
+      var grupo = crear('div', 'opciones');
+      p.opciones.forEach(function (texto) {
+        var etiqueta = crear('label', 'opcion');
+        var radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'eleccion' + p.n;
+        radio.value = texto;
+        radio.addEventListener('change', function () {
+          estado['eleccion' + p.n] = texto;
+          alCambiar();
+        });
+        etiqueta.appendChild(radio);
+        etiqueta.appendChild(crear('span', null, texto));
+        grupo.appendChild(etiqueta);
+        campos['eleccion' + p.n + ':' + texto] = radio;
+      });
+      bloque.appendChild(grupo);
+    }
+
+    var area = document.createElement('textarea');
+    area.id = 'p' + p.n;
+    area.rows = p.alto ? 5 : 3;
+    area.placeholder = 'Tu respuesta…';
+    area.setAttribute('aria-label', 'Respuesta a la pregunta ' + p.n);
+    area.addEventListener('input', function () {
+      estado['p' + p.n] = area.value;
+      ajustarAlto(area);
+      alCambiar();
+    });
+    bloque.appendChild(area);
+    campos['p' + p.n] = area;
+
+    elPreguntas.appendChild(bloque);
+  });
+
+  function ajustarAlto(area) {
+    area.style.height = 'auto';
+    area.style.height = (area.scrollHeight + 2) + 'px';
+  }
+
+  /* ---------- estado visible ---------- */
+
+  function contar() {
+    var n = 0;
+    PREGUNTAS.forEach(function (p) {
+      var texto = (estado['p' + p.n] || '').trim();
+      if (texto || estado['eleccion' + p.n]) n++;
+    });
+    return n;
+  }
+
+  function pintarProgreso() {
+    elProgreso.textContent = contar() + ' de 10';
+  }
+
+  function marcarGuardado(modo) {
+    elGuardado.dataset.modo = modo;
+    if (modo === 'guardado') {
+      var d = new Date();
+      elGuardado.textContent = 'guardado ' +
+        String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+    } else if (modo === 'error') {
+      elGuardado.textContent = 'no se guarda';
+    } else {
+      elGuardado.textContent = '—';
+    }
+  }
+
+  function mostrarAviso(texto) {
+    elAviso.textContent = texto;
+    elAviso.hidden = false;
+  }
+
+  function eco(texto) {
+    elEco.textContent = texto;
+    clearTimeout(eco.t);
+    eco.t = setTimeout(function () { elEco.textContent = ''; }, 4000);
+  }
+
+  /* ---------- guardado local ---------- */
+
+  function alCambiar() {
+    pintarProgreso();
+    if (!puedeGuardar) return;
+    try {
+      estado.actualizado = new Date().toISOString();
+      localStorage.setItem(LOCAL, JSON.stringify(estado));
+      marcarGuardado('guardado');
+    } catch (e) {
+      // Ventana privada, almacenamiento lleno o bloqueado por el navegador.
+      puedeGuardar = false;
+      marcarGuardado('error');
+      mostrarAviso('Este navegador no deja guardar nada. Puedes rellenarlo igual, pero si cierras la página se pierde: copia o descarga las respuestas antes de salir.');
+    }
+  }
+
+  function volcar(datos) {
+    PREGUNTAS.forEach(function (p) {
+      var area = campos['p' + p.n];
+      if (area) {
+        area.value = datos['p' + p.n] || '';
+        ajustarAlto(area);
+      }
+      if (p.opciones) {
+        p.opciones.forEach(function (texto) {
+          var radio = campos['eleccion' + p.n + ':' + texto];
+          if (radio) radio.checked = datos['eleccion' + p.n] === texto;
+        });
+      }
+    });
+    pintarProgreso();
+  }
+
+  /* ---------- exportar ---------- */
+
+  function comoTexto() {
+    var lineas = ['CUESTIONARIO F-01', ''];
+    PREGUNTAS.forEach(function (p) {
+      lineas.push(p.n + '. ' + p.enunciado.toUpperCase());
+      if (p.opciones) {
+        lineas.push(estado['eleccion' + p.n] || '(sin elegir)');
+      }
+      lineas.push((estado['p' + p.n] || '').trim() || '(sin responder)');
+      lineas.push('');
+    });
+    return lineas.join('\n');
+  }
+
+  document.getElementById('copiar').addEventListener('click', function () {
+    var texto = comoTexto();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(texto).then(
+        function () { eco('Copiado. Ya puedes pegarlo donde quieras.'); },
+        function () { copiarAlaAntigua(texto); }
+      );
+    } else {
+      copiarAlaAntigua(texto);
+    }
+  });
+
+  function copiarAlaAntigua(texto) {
+    var caja = document.createElement('textarea');
+    caja.value = texto;
+    caja.setAttribute('readonly', '');
+    caja.style.position = 'fixed';
+    caja.style.top = '-1000px';
+    document.body.appendChild(caja);
+    caja.select();
+    var bien = false;
+    try { bien = document.execCommand('copy'); } catch (e) { bien = false; }
+    document.body.removeChild(caja);
+    eco(bien ? 'Copiado. Ya puedes pegarlo donde quieras.' : 'No se ha podido copiar: usa el botón de descargar.');
+  }
+
+  document.getElementById('descargar').addEventListener('click', function () {
+    var blob = new Blob([comoTexto()], { type: 'text/plain;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'F-01.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    eco('Descargado como F-01.txt');
+  });
+
+  document.getElementById('borrar').addEventListener('click', function () {
+    if (!window.confirm('Se borra todo lo que has escrito y no se puede recuperar. ¿Seguimos?')) return;
+    estado = {};
+    try { localStorage.removeItem(LOCAL); } catch (e) { /* nada que borrar */ }
+    volcar(estado);
+    marcarGuardado('ninguno');
+    eco('Borrado.');
+  });
+
+  /* ---------- arranque ---------- */
+
+  try {
+    var crudo = localStorage.getItem(LOCAL);
+    if (crudo) {
+      estado = JSON.parse(crudo) || {};
+      volcar(estado);
+      marcarGuardado('guardado');
+    } else {
+      pintarProgreso();
+      marcarGuardado('ninguno');
+    }
+  } catch (e) {
+    puedeGuardar = false;
+    pintarProgreso();
+    marcarGuardado('error');
+    mostrarAviso('Este navegador no deja guardar nada. Puedes rellenarlo igual, pero si cierras la página se pierde: copia o descarga las respuestas antes de salir.');
+  }
+})();
+</script>
 
 </body>
-
 </html>
-
-

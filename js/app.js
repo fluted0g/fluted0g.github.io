@@ -4,7 +4,7 @@ paredazosApp.controller('NavigatorController', function NavigatorController($sco
   $scope.enlaces = [
     {
       titulo: 'Inicio',
-      url: 'index.html'
+      url: 'aldea.html'
     },
     {
       titulo: 'Las gallinas',
